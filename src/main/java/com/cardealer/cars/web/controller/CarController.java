@@ -54,7 +54,7 @@ public class CarController {
     }
 
     @CrossOrigin
-    @GetMapping("/search")
+    @PostMapping("/search")
     public List<CarView> searchForMake(@RequestBody String make) {
         InputJson inputJson = gson.fromJson(make, InputJson.class);
         return carService.searchForMake(inputJson.getMake());
