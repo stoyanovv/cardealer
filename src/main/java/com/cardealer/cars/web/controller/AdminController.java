@@ -29,7 +29,7 @@ public class  AdminController {
         this.validationUtil = validationUtil;
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/addcar")
     public OutputJson deleteCar(@RequestBody String carInfo) {
         OutputJson outputJson = new OutputJson();
