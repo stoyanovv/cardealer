@@ -3,17 +3,20 @@ package com.cardealer.cars.service.impl;
 import com.cardealer.cars.common.OutputJson;
 import com.cardealer.cars.model.binding.CarBindingModel;
 import com.cardealer.cars.model.entity.Car;
+import com.cardealer.cars.model.entity.Purchase;
 import com.cardealer.cars.model.entity.User;
 import com.cardealer.cars.model.view.CarInfoView;
 import com.cardealer.cars.model.view.CarView;
 import com.cardealer.cars.repository.CarRepository;
 import com.cardealer.cars.service.CarService;
+import com.cardealer.cars.service.PurchaseService;
 import com.cardealer.cars.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +25,13 @@ public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
     private final UserService userService;
+    private final PurchaseService purchaseService;
     private final ModelMapper modelMapper;
 
-    public CarServiceImpl(CarRepository carRepository, UserService userService, ModelMapper modelMapper) {
+    public CarServiceImpl(CarRepository carRepository, UserService userService, PurchaseService purchaseService, ModelMapper modelMapper) {
         this.carRepository = carRepository;
         this.userService = userService;
+        this.purchaseService = purchaseService;
         this.modelMapper = modelMapper;
     }
 
@@ -123,6 +128,10 @@ public class CarServiceImpl implements CarService {
             outputJson.setMessage("Няма такъв потребител");
             return outputJson;
         }
+        Purchase purchase = modelMapper.map(car, Purchase.class);
+        purchase.setUser(user);
+        purchase.setTimeOfPurchase(LocalDateTime.now());
+        purchaseService.save(purchase);
         car.setUser(user);
         user.getCars().add(car);
         carRepository.save(car);
