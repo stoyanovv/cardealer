@@ -1,7 +1,5 @@
 package com.cardealer.cars.common;
 
-import com.cardealer.cars.model.entity.City;
-import com.cardealer.cars.repository.CityRepository;
 import com.cardealer.cars.service.CarService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
