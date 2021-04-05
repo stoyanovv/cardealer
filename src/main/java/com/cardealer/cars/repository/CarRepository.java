@@ -12,7 +12,7 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     List<Car> getAllByBought(boolean bought);
 
-    Optional<Car> findById(Long id);
+    Car getById(Long id);
 
     List<Car> getAllByUserId(Long id);
 

@@ -1,13 +1,11 @@
 package com.cardealer.cars.service.impl;
 
-import com.cardealer.cars.common.OutputJson;
 import com.cardealer.cars.model.entity.*;
 import com.cardealer.cars.model.entity.enums.Role;
 import com.cardealer.cars.model.service.UserLoginServiceModel;
 import com.cardealer.cars.model.service.UserRegisterServiceModel;
 import com.cardealer.cars.model.view.profile.MyProfileView;
 import com.cardealer.cars.repository.UserRepository;
-import com.cardealer.cars.repository.UserRoleRepository;
 import com.cardealer.cars.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,17 +26,17 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserDetailsService userDetailsService;
     private final CityService cityService;
-    private final UserRoleRepository userRoleRepository;
     private final ModelMapper modelMapper;
+    private final UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserDetailsService userDetailsService, CityService cityService, UserRoleRepository userRoleRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, UserDetailsService userDetailsService, CityService cityService, ModelMapper modelMapper, UserRoleService userRoleService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userDetailsService = userDetailsService;
         this.cityService = cityService;
-        this.userRoleRepository = userRoleRepository;
         this.modelMapper = modelMapper;
+        this.userRoleService = userRoleService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -51,17 +48,17 @@ public class UserServiceImpl implements UserService {
         if(userRepository.count() == 0) {
             UserRole adminRole = new UserRole();
             adminRole.setRole(Role.ADMIN);
-            userRoleRepository.save(adminRole);
+            userRoleService.save(adminRole);
             UserRole userRole = new UserRole();
             userRole.setRole(Role.USER);
-            userRoleRepository.save(userRole);
+            userRoleService.save(userRole);
             userRoles.add(adminRole);
             userRoles.add(userRole);
             user.setRoles(userRoles);
         }else {
             UserRole userRole = new UserRole();
             userRole.setRole(Role.USER);
-            userRoleRepository.save(userRole);
+            userRoleService.save(userRole);
             userRoles.add(userRole);
             user.setRoles(userRoles);
         }
@@ -94,8 +91,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public User getById(Long id) {
+        return userRepository.getById(id);
     }
 
     @Override

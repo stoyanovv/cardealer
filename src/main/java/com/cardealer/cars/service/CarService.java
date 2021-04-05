@@ -25,4 +25,7 @@ public interface CarService {
     List<CarView> searchForMake(String make);
 
     OutputJson addCar(CarBindingModel carBindingModel);
+
+    void changePrice();
+
 }

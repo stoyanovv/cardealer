@@ -89,7 +89,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CarInfoView getInfoForCar(Long carId) {
-        return modelMapper.map(carRepository.findById(carId).orElse(null), CarInfoView.class);
+        return modelMapper.map(carRepository.getById(carId), CarInfoView.class);
     }
 
     @Override
@@ -110,9 +110,19 @@ public class CarServiceImpl implements CarService {
     @Override
     public OutputJson buyCar(Long id, Long carId) {
         OutputJson outputJson = new OutputJson();
-        Car car = carRepository.findById(carId).orElse(null);
+        Car car = carRepository.getById(carId);
+        if (car == null) {
+            outputJson.setSuccess(false);
+            outputJson.setMessage("Няма такъв автомобил");
+            return outputJson;
+        }
         car.setBought(true);
-        User user = userService.findById(id).orElse(null);
+        User user = userService.getById(id);
+        if (user == null) {
+            outputJson.setSuccess(false);
+            outputJson.setMessage("Няма такъв потребител");
+            return outputJson;
+        }
         car.setUser(user);
         user.getCars().add(car);
         carRepository.save(car);
@@ -125,7 +135,12 @@ public class CarServiceImpl implements CarService {
     @Override
     public OutputJson deleteCar(Long id, Long carId) {
         OutputJson outputJson = new OutputJson();
-        Car car = carRepository.findById(carId).orElse(null);
+        Car car = carRepository.getById(carId);
+        if (car == null) {
+            outputJson.setSuccess(false);
+            outputJson.setMessage("Няма такъв автомобил");
+            return outputJson;
+        }
         car.setBought(false);
         car.setUser(null);
         carRepository.save(car);
@@ -151,5 +166,13 @@ public class CarServiceImpl implements CarService {
         outputJson.setSuccess(true);
         outputJson.setMessage("Успешно добавихте автомобил " + carBindingModel.getMake());
         return outputJson;
+    }
+
+    @Override
+    public void changePrice() {
+        for (Car car : carRepository.getAllByBought(false)) {
+            car.setPrice(car.getPrice().subtract(BigDecimal.valueOf(1000)));
+            carRepository.save(car);
+        }
     }
 }

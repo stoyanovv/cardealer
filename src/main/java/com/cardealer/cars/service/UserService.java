@@ -17,7 +17,7 @@ public interface UserService {
     MyProfileView getMyProfile(Long id);
 
 
-    Optional<User> findById(Long id);
+    User getById(Long id);
 
     void save(User user);
 }

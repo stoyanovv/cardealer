@@ -2,6 +2,7 @@ package com.cardealer.cars.common;
 
 import com.cardealer.cars.model.entity.City;
 import com.cardealer.cars.repository.CityRepository;
+import com.cardealer.cars.service.CarService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -9,26 +10,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class Scheduler {
 
-    private final CityRepository cityRepository;
+    private final CarService carService;
 
-    public Scheduler(CityRepository cityRepository) {
-        this.cityRepository = cityRepository;
+    public Scheduler(CarService carService) {
+        this.carService = carService;
     }
 
-    @Scheduled(fixedRate = 3600000)
+    @Scheduled(fixedRate = 86400000)
     public void checkMatchesForWinner() {
-//        if (cityRepository.count() == 0) {
-//            City city = new City();
-//            City city2 = new City();
-//            City city3 = new City();
-//            city.setName("Shumen");
-//            city2.setName("Sofia");
-//            city3.setName("Varna");
-//
-//            cityRepository.save(city);
-//            cityRepository.save(city2);
-//            cityRepository.save(city3);
-//            System.out.println("Cities saved");
-//        }
+        carService.changePrice();
     }
 }
