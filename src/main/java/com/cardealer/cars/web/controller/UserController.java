@@ -1,7 +1,6 @@
 package com.cardealer.cars.web.controller;
 
 import com.cardealer.cars.common.OutputJson;
-import com.cardealer.cars.config.security.SecurityUserDetailsServiceImpl;
 import com.cardealer.cars.model.binding.UserLoginBindingModel;
 import com.cardealer.cars.model.binding.UserRegisterBindingModel;
 import com.cardealer.cars.model.service.UserLoginServiceModel;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.*;
 import java.util.Set;
-import java.util.UUID;
 
 @RestController
 public class UserController {
@@ -69,7 +67,7 @@ public class UserController {
             userRegisterBindingModel.setPassword(passwordEncoder.encode(userRegisterBindingModel.getPassword()));
             userService.register(modelMapper.map(userRegisterBindingModel, UserRegisterServiceModel.class));
             outputJson.setSuccess(true);
-            outputJson.setMessage("Успешно се регистрирахте.");
+            outputJson.setMessage("На посочения от вас имейл беше изпратен линк за потвърждение. Моля влезте в пощата си и кликнете на линка.");
             return outputJson;
         }
         StringBuilder sb = new StringBuilder();
@@ -96,6 +94,11 @@ public class UserController {
         if (userLoginServiceModel == null) {
             outputJson.setSuccess(false);
             outputJson.setMessage("Невалиден имейл адрес или парола");
+            return outputJson;
+        }
+        if (!userDetailsService.checkEmailConfirmed(userLoginBindingModel.getEmail())) {
+            outputJson.setSuccess(false);
+            outputJson.setMessage("Трябва да потвърдите имейла си");
             return outputJson;
         }
         outputJson.setSuccess(true);
@@ -135,7 +138,12 @@ public class UserController {
     @CrossOrigin
     @PostMapping("/login")
     public void tokenLogin() {
+    }
 
+    @CrossOrigin
+    @GetMapping("/confirm")
+    public OutputJson confirm(@RequestParam("token") String token) {
+        return userService.confirmToken(token);
     }
 
 }

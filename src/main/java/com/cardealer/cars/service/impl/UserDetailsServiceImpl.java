@@ -67,4 +67,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userDetailsRepository.getByEmail(email);
     }
 
+    @Override
+    public void confirmEmail(String email) {
+        userDetailsRepository.confirmEmail(email);
+    }
+
+    @Override
+    public boolean checkEmailConfirmed(String email) {
+        return userDetailsRepository.findByEmail(email).orElse(null).isEmailConfirmed();
+    }
+
+    @Override
+    public void delete(UserDetails userDetails) {
+        userDetailsRepository.delete(userDetails);
+    }
+
 }
