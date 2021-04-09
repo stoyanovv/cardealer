@@ -6,6 +6,7 @@ import com.google.gson.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import javax.validation.Validation;
 import javax.validation.Validator;

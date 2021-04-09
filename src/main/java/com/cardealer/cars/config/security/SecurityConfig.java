@@ -55,8 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .addFilter(new JwtEmailAndPasswordAuthenticationFilter(authenticationManager()))
             .addFilterAfter(new JwtTokenVerifier(), JwtEmailAndPasswordAuthenticationFilter.class)
             .authorizeRequests()
-//            .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
-//            .antMatchers("/buycar/**").hasAnyAuthority("ROLE_USER")
+            .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
+            .antMatchers("/buycar/**", "deletecar/**", "/boughtcars/**", "/carinfo/**", "/myprofile/**",
+                    "/search").hasAnyAuthority("ROLE_USER")
             .anyRequest()
             .authenticated();
 
@@ -65,8 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(WebSecurity web) throws Exception {
     web.ignoring()
-            .antMatchers(HttpMethod.GET,"/myprofile/**", "/**")
-            .antMatchers(HttpMethod.POST, "/register", "/signin", "/buycar/**", "/**");
+            .antMatchers(HttpMethod.GET,"/cars", "/shop", "/confirm")
+            .antMatchers(HttpMethod.POST, "/register", "/signin");
   }
 
 }

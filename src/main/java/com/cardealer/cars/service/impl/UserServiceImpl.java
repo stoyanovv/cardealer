@@ -80,8 +80,8 @@ public class UserServiceImpl implements UserService {
         ConfirmationToken confirmationToken = new ConfirmationToken(emailToken, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15),
                 userDetails);
         confirmationTokenService.saveConfirmationToken(confirmationToken);
-        String link = "http://localhost:8080/confirm?token=" + emailToken;
-        emailService.send(userDetails.getEmail(), buildEmail((userDetails.getName() + " " + userDetails.getLastName()), link));
+        String link = "http://localhost:3000/confirm/" + emailToken;
+//        emailService.send(userDetails.getEmail(), buildEmail((userDetails.getName() + " " + userDetails.getLastName()), link));
         TimerTask task = new TimerTask() {
             public void run() {
                 if (!userDetails.isEmailConfirmed()) {
