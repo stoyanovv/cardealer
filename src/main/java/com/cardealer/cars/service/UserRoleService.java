@@ -6,4 +6,6 @@ public interface UserRoleService {
 
 
     void save(UserRole userRole);
+
+    void delete(UserRole role);
 }

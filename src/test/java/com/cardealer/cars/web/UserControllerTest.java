@@ -17,7 +17,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -50,12 +52,12 @@ public class UserControllerTest {
     private Gender TEST_USER1_GENDER = Gender.MALE, TEST_USER2_GENDER = Gender.FEMALE;
     private User user1 = new User();
     private UserDetails userDetails1 = new UserDetails();
-    private List<UserRole> userRoles1 = new ArrayList<>();
+    private Set<UserRole> userRoles1 = new HashSet<>();
     private UserRole userRole1 = new UserRole();
     private City city1 = new City();
     private User user2 = new User();
     private UserDetails userDetails2 = new UserDetails();
-    private List<UserRole> userRoles2 =new ArrayList<>();
+    private Set<UserRole> userRoles2 =new HashSet<>();
     private UserRole userRole2 = new UserRole();
 
     @BeforeEach

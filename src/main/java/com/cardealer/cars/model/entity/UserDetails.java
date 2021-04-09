@@ -20,6 +20,7 @@ public class UserDetails extends BaseEntity {
     private Gender gender;
     private Boolean didUserAgree;
     private String pictureUrl;
+    private boolean emailConfirmed;
 
 
     public UserDetails() {
@@ -124,4 +125,11 @@ public class UserDetails extends BaseEntity {
         this.didUserAgree = didUserAgree;
     }
 
+    public boolean isEmailConfirmed() {
+        return emailConfirmed;
+    }
+
+    public void setEmailConfirmed(boolean emailConfirmed) {
+        this.emailConfirmed = emailConfirmed;
+    }
 }

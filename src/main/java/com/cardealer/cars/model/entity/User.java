@@ -3,7 +3,6 @@ package com.cardealer.cars.model.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,7 +11,7 @@ public class User extends BaseEntity {
 
     private LocalDateTime lastLogin;
     private City city;
-    private List<UserRole> roles;
+    private Set<UserRole> roles;
     private Set<Car> cars;
 
     public User() {
@@ -39,11 +38,11 @@ public class User extends BaseEntity {
 
 
     @ManyToMany(fetch = FetchType.EAGER)
-    public List<UserRole> getRoles() {
+    public Set<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<UserRole> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
 

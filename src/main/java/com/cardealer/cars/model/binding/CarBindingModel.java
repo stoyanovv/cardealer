@@ -3,10 +3,7 @@ package com.cardealer.cars.model.binding;
 import com.google.gson.annotations.Expose;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -82,7 +79,8 @@ public class CarBindingModel {
     }
 
     @NotNull(message = "Трябва да се въведе обем на мотора")
-    @Size(min = 400, max = 8000, message = "Обемът на моторо трябва да е между 400 и 8000 куб. см.")
+    @Min(value = 400, message = "Обемът на моторо трябва да е между 400 и 10000 куб. см.")
+    @Max(value = 10000, message = "Обемът на моторо трябва да е между 400 и 10000 куб. см.")
     public int getEnginePower() {
         return enginePower;
     }
@@ -91,7 +89,7 @@ public class CarBindingModel {
         this.enginePower = enginePower;
     }
 
-    @Size(min = 10, max = 150, message = "Пътят към снимката трябва да е между 10 и 150 символа")
+    @Size(min = 10, max = 150, message = "Пътят към снимката трябва да е между 3 и 150 символа")
     public String getImgUrl() {
         return imgUrl;
     }

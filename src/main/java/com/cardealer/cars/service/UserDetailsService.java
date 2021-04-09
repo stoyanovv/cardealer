@@ -24,4 +24,10 @@ public interface UserDetailsService {
     Optional<UserDetails> findByEmail(String email);
 
     UserDetails getByEmail(String email);
+
+    void confirmEmail(String email);
+
+    boolean checkEmailConfirmed(String email);
+
+    void delete(UserDetails userDetails);
 }

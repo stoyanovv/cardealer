@@ -20,4 +20,6 @@ public interface UserService {
     User getById(Long id);
 
     void save(User user);
+
+    OutputJson confirmToken(String token);
 }
