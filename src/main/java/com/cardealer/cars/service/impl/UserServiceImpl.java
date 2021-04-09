@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
                 userDetails);
         confirmationTokenService.saveConfirmationToken(confirmationToken);
         String link = "http://localhost:3000/confirm/" + emailToken;
-        emailService.send(userDetails.getEmail(), buildEmail((userDetails.getName() + " " + userDetails.getLastName()), link));
+//        emailService.send(userDetails.getEmail(), buildEmail((userDetails.getName() + " " + userDetails.getLastName()), link));
         TimerTask task = new TimerTask() {
             public void run() {
                 if (!userDetails.isEmailConfirmed()) {
