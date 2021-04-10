@@ -89,7 +89,7 @@ public class CarBindingModel {
         this.enginePower = enginePower;
     }
 
-    @Size(min = 10, max = 150, message = "Пътят към снимката трябва да е между 3 и 150 символа")
+    @Size(min = 3, max = 150, message = "Пътят към снимката трябва да е между 3 и 150 символа")
     public String getImgUrl() {
         return imgUrl;
     }
